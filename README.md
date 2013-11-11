@@ -16,10 +16,36 @@ git clone https://github.com/siddharthan64/semantics3-objc.git
 #Third party libraries added:
 OAuthConsumer
 
-## Adding to the static library to your project
+## Adding the static library to your project
 1. Create builds for i386 (simulator) and armv7 (iphone/ipad)
-2. Change target to universal library
+2. Change target to universal library and build the program to create a static library file that is compatible with both the architecture.
+
 ![alt tag](http://i.imgur.com/4Ejux45.png)
+
+This creates a separate folder for the universal library as shown below:
+
+![alt tag] (http://i.imgur.com/Pxdmkej.png)
+
+
+
+## Settings for the Project Using the Static Library
+Add the static library as a framework under Build Phases > Link Binary With Libraries and add the libsemantics3-objc.a file.
+Next make sure project is set to search for User Search Paths. This is done under Build Settings > Always Search User Paths and make sure its set to YES.
+In the same area find User Header Search Paths and add:
+
+"$(PROJECT_TEMP_DIR)/../UninstalledProducts/include"
+
+This tells Xcode to look for static libraries within the intermediate build folder that Xcode creates during the build process. In here, we have the "include" folder we are using for our static library locations we setup in step 2 for the static library project settings. This is the most important step in getting Xcode to correctly find your static libraries.
+
+## Configure the Workspace
+Here we want to configure the workspace so that it will build the static library when we build our app. This is done by editing the scheme used for our app.
+
+Make sure you have the scheme selected that will create your application.
+From the scheme drop-down, choose Edit Scheme.
+Select Build at the top of list on the left. Add a new target by pressing the + on the middle pane.
+You should see the static library show up for the library you are trying to link. Choose the iOS static library.
+Click both Run and Archive. This tells the scheme to compile the libraries for the static library whenever you build your app.
+Drag the static library above your application target. This makes the static libraries compile before your application target.
 
 
 ## Getting Started
