@@ -17,9 +17,9 @@ git clone https://github.com/siddharthan64/semantics3-objc.git
 OAuthConsumer
 
 ## Adding to the static library to your project
-1.Method 1
-
-2.Method 2
+1. Create builds for i386 (simulator) and armv7 (iphone/ipad)
+2. Change target to universal library
+![alt tag](http://imgur.com/4Ejux45)
 
 
 ## Getting Started
