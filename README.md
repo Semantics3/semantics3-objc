@@ -58,6 +58,8 @@ In order to use the client, you must have both an API key and an API secret. To 
 https://www.semantics3.com/
 You can access your API access credentials from the user dashboard at https://www.semantics3.com/dashboard/applications
  
+Add the value -ObjC to the application target's other linker flags under 'build settings'
+  
 ### Using the static library:
 
  The data can be crunched by using the following objects:
