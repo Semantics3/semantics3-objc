@@ -18,7 +18,7 @@ OAuthConsumer
 
 ## Adding the static library to your project
 1. Create builds for i386 (simulator) and armv7 (iphone/ipad)
-2. Change target to universal library and build the program to create a static library file that is compatible with both the architecture.
+2. Change target to universal library and build the universalLib to create a static library file that is compatible with both the architecture.
 
 ![alt tag](http://i.imgur.com/4Ejux45.png)
 
