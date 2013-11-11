@@ -26,7 +26,7 @@
     [super runQuery];
 }
 
--(void)offersField:(NSMutableDictionary *)offerFields{
+-(void)offersField:(id)offerFields{
     
     [super field:offerFields];
 }

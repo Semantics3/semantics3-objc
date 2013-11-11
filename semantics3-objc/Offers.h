@@ -12,6 +12,6 @@
 
 -(id) initOffers:(NSString *)apiSecret andKey:(NSString *)apiKey;
 -(void)getOffers;
--(void)offersField:(NSMutableDictionary *)offerFields;
+-(void)offersField:(id )offerFields;
 
 @end
