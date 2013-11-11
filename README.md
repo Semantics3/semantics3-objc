@@ -89,15 +89,21 @@ The following examples show you how to interface with some of the core functiona
      
     [sem field:tempDict];
     [sem runQuery];
+    
+The output is received using the delegate method as shown below:
+
+    -(void)queryData:(NSString *)content{
+        NSLog(@"query output: %@",content);
+     }
 
 ### Building your queries
-    A query can be constructed by three ways:
+A query can be constructed by three ways:
+   
+1. Passing a NSMutableDictionary Object directly to the field:(id)queryObject method
     
-    1. Passing a NSMutableDictionary Object directly to the field:(id)queryObject method
+2. Passing a JSON string directly to the field:(id)queryObject method
     
-    2. Passing a JSON string directly to the field:(id)queryObject method
-    
-    3. Constructing a query using the -(void)buildQuery:(id)object andKeys:(NSString *)keys; method.
+3. Constructing a query using the -(void)buildQuery:(id)object andKeys:(NSString *)keys; method.
     
     
 ### Nested Search Query
@@ -106,15 +112,24 @@ You can intuitively construct all your complex queries but just repeatedly using
                      
           -(void)buildQuery:(id)object andKeys:(NSString *)keys;
           
-Here is how we translate the following JSON query:
+Here is a sample complex nested query:
 
+     q={"cat_id":4992,"brand":"Toshiba","weight":{"gte":1000000,"lt":5000000},"sitedetails":{"name":"frys.com <http://frys.com>","latestoffers":{"currency":"USD","price":{"gte":100}}},"sort":{"name":"dsc"},"offset":10,"limit":5}
 
-
-This query returns all Toshiba products within a certain weight range narrowed down to just those that retailed recently on newegg.com for >= USD 100.
-
-
-### Explore Price Histories
-For this example, we are going to look at a particular product that is sold by select merchants and has a price of >= USD 30 and seen after a specific date (specified as a UNIX timestamp).
+The above complex query can be constructed using the query builder method as below:
+      
+      semantics3_objc *sem = [[semantics3_objc alloc] initSemantic3Request:OAUTH_KEY withapiSecret:OAUTH_SECRET andEndpoints:@"products"];
+ 
+       [sem buildQuery:@"4992" andKeys:@"cat_id"];
+       [sem buildQuery:@"Toshiba"andKeys:@"brand"];
+       [sem buildQuery:@"1000000" andKeys:@"weight,gte"];
+       [sem buildQuery:@"5000000" andKeys:@"weight,lt"];
+       [sem buildQuery:@"frys.com <http://frys.com>"andKeys:@"sitedetails,name" ];
+       [sem buildQuery:@"USD" andKeys:@"sitedetails,latestoffers,currency"];
+       [sem buildQuery:@"100" andKeys:@"sitedetails,latestoffers,price,gte"];
+       [sem buildQuery:@"dsc" andKeys:@"sort,name"];
+       [sem buildQuery:@"10" andKeys:@"offset"];
+       [sem buildQuery:@"5" andKeys:@"limit"];
 
  
 
