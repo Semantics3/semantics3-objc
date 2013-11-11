@@ -57,13 +57,7 @@ Drag the static library above your application target. This makes the static lib
 In order to use the client, you must have both an API key and an API secret. To obtain your key and secret, you need to first create an account at
 https://www.semantics3.com/
 You can access your API access credentials from the user dashboard at https://www.semantics3.com/dashboard/applications
-
-### Setup Work
-
-Let's lay the groundwork.
-
-
-
+ 
 ### Using the static library:
 
  The data can be crunched by using the following objects:
