@@ -33,8 +33,10 @@ Add the static library as a framework under Build Phases > Link Binary With Libr
 Next make sure project is set to search for User Search Paths. This is done under Build Settings > Always Search User Paths and make sure its set to YES.
 In the same area find User Header Search Paths and add:
 
+```bash
 "$(PROJECT_TEMP_DIR)/../UninstalledProducts/include"
 
+```
 This tells Xcode to look for static libraries within the intermediate build folder that Xcode creates during the build process. In here, we have the "include" folder we are using for our static library locations we setup in step 2 for the static library project settings. This is the most important step in getting Xcode to correctly find your static libraries.
 
 ## Configure the Workspace
@@ -48,6 +50,8 @@ Click both Run and Archive. This tells the scheme to compile the libraries for t
 Drag the static library above your application target. This makes the static libraries compile before your application target.
 
 
+![alt tag](http://i.imgur.com/TFU6lOc.png)
+
 ## Getting Started
 
 In order to use the client, you must have both an API key and an API secret. To obtain your key and secret, you need to first create an account at
@@ -60,42 +64,53 @@ Let's lay the groundwork.
 
 
 
-### First Query aka 'Hello World':
+### Using the static library:
 
-Let's make our first query! For this query, we are going to search for all Toshiba products that fall under the category of "Computers and Accessories", whose cat_id is 4992. 
-
-
+ The data can be crunched by using the following objects:
+ 
+ 1.semantics3_objc
+ 2.Products
+ 3.Offers
+ 4.Categories
+ 
+ 
 
 ## Examples
 
 The following examples show you how to interface with some of the core functionality of the Semantics3 Products API. For more detailed examples check out the Quickstart guide: https://www.semantics3.com/quickstart
 
-### Explore the Category Tree
 
-In this example we are going to be accessing the categories endpoint. We are going to be specifically exploiring the "Computers and Accessories" category, which has a cat_id of 4992. For more details regarding our category tree and associated cat_ids check out our API docs at https://www.semantics3.com/docs
+     semantics3_objc *sem = [[semantics3_objc alloc] initSemantic3Request:OAUTH_KEY withapiSecret:OAUTH_SECRET andEndpoints:@"products"];
 
+     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
+    
+     [tempDict setObject:@"4znupRCkN6w2Q4Ke4s6sUC" forKey:@"sem3_id"];
+     [tempDict setObject:@"Satellite" forKey:@"mod"];
+     
+    [sem field:tempDict];
+    [sem runQuery];
 
-
+### Building your queries
+    A query can be constructed by three ways:
+    
+    1. Passing a NSMutableDictionary Object directly to the field:(id)queryObject method
+    
+    2. Passing a JSON string directly to the field:(id)queryObject method
+    
+    3. Constructing a query using the -(void)buildQuery:(id)object andKeys:(NSString *)keys; method.
+    
+    
 ### Nested Search Query
 
-You can intuitively construct all your complex queries but just repeatedly using the products_field() or add() methods.
+You can intuitively construct all your complex queries but just repeatedly using the following method:
+                     
+          -(void)buildQuery:(id)object andKeys:(NSString *)keys;
+          
 Here is how we translate the following JSON query:
 
 
 
 This query returns all Toshiba products within a certain weight range narrowed down to just those that retailed recently on newegg.com for >= USD 100.
-
-
-### Pagination
-
-The Semantics3 API allows for pagination, so you can request for, say, 5 results,
-and then continue to obtain the next 5 from where you stopped previously. For the
-python semantics3 module, we have implemented this using iterators.
-All you have to do is specify a cache size, and use it the same way you would
-any iterator:
-
- 
-Our library will automatically request for results 5 products at a time.
 
 
 ### Explore Price Histories
