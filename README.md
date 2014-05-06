@@ -88,6 +88,7 @@ The following examples show you how to interface with some of the core functiona
     [sem field:tempDict];
     [sem runQuery];
     
+Include the delegate - 'Sem3ObjCDelegate' in the header file where you want to fetch the query result data.
 The output is received using the delegate method as shown below:
 
     -(void)queryData:(NSString *)content{
