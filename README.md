@@ -64,10 +64,12 @@ You can access your API access credentials from the user dashboard at https://ww
   
 ### Using the static library:
 
- The data can be retrieved long the following resources:
+ The data can be retrieved along the following resources:
  
  1.semantics3_objc
+ 
  2.Products
+
  3.Categories
  
  
