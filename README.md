@@ -1,5 +1,5 @@
 # semantics3
-semantics3-objc is a objective-C client for accessing the Semantics3 Products API, which provides structured information, including pricing histories, for a large number of products.
+semantics3-objc is a objective-C client for accessing the Semantics3 Products API, which provides structured products information for a large number of products.
 See https://www.semantics3.com for more information.
 
 Quickstart guide: https://www.semantics3.com/quickstart
@@ -9,7 +9,7 @@ API documentation can be found at https://www.semantics3.com/docs/
 To install the latest source from the repository
 
 ```bash
-git clone https://github.com/siddharthan64/semantics3-objc.git
+git clone https://github.com/Semantics3/semantics3-objc.git
 
 ```
 
@@ -64,71 +64,62 @@ You can access your API access credentials from the user dashboard at https://ww
   
 ### Using the static library:
 
- The data can be crunched by using the following objects:
+ The data can be retrieved long the following resources:
  
  1.semantics3_objc
  2.Products
- 3.Offers
- 4.Categories
+ 3.Categories
  
  
 
 ## Examples
 
-The following examples show you how to interface with some of the core functionality of the Semantics3 Products API. For more detailed examples check out the Quickstart guide: https://www.semantics3.com/quickstart
+The following examples show you how to interface with some of the core functionality of the Semantics3 Products API. For more detailed examples check out the API documentation: https://www.semantics3.com/docs
 
 
      semantics3_objc *sem = [[semantics3_objc alloc] initSemantic3Request:OAUTH_KEY withapiSecret:OAUTH_SECRET andEndpoints:@"products"];
 
      NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] init];
     
-     [tempDict setObject:@"4znupRCkN6w2Q4Ke4s6sUC" forKey:@"sem3_id"];
-     [tempDict setObject:@"Satellite" forKey:@"mod"];
+     [tempDict setObject:@"iphone" forKey:@"search"];
      
     [sem field:tempDict];
     [sem runQuery];
     
-Include the delegate - 'Sem3ObjCDelegate' in the header file where you want to fetch the query result data.
+Include the delegate - 'Sem3ObjCDelegate' in the header file where you want to fetch the request result data.
 The output is received using the delegate method as shown below:
 
     -(void)queryData:(NSString *)content{
         NSLog(@"query output: %@",content);
      }
 
-### Building your queries
-A query can be constructed by three ways:
+### Building your requests
+A request can be constructed by three ways:
    
 1. Passing a NSMutableDictionary Object directly to the field:(id)queryObject method
     
 2. Passing a JSON string directly to the field:(id)queryObject method
     
-3. Constructing a query using the -(void)buildQuery:(id)object andKeys:(NSString *)keys; method.
+3. Constructing a request using the -(void)buildQuery:(id)object andKeys:(NSString *)keys; method.
     
     
-### Nested Search Query
+### Sample Queries
 
 You can intuitively construct all your complex queries but just repeatedly using the following method:
                      
           -(void)buildQuery:(id)object andKeys:(NSString *)keys;
           
-Here is a sample complex nested query:
+Here is a slightly more complex query:
 
-     q={"cat_id":4992,"brand":"Toshiba","weight":{"gte":1000000,"lt":5000000},"sitedetails":{"name":"frys.com <http://frys.com>","latestoffers":{"currency":"USD","price":{"gte":100}}},"sort":{"name":"dsc"},"offset":10,"limit":5}
+     q={"search":"iphone","sort":{"price":"dsc"},"offset":2}
 
 The above complex query can be constructed using the query builder method as below:
       
       semantics3_objc *sem = [[semantics3_objc alloc] initSemantic3Request:OAUTH_KEY withapiSecret:OAUTH_SECRET andEndpoints:@"products"];
  
-       [sem buildQuery:@"4992" andKeys:@"cat_id"];
-       [sem buildQuery:@"Toshiba"andKeys:@"brand"];
-       [sem buildQuery:@"1000000" andKeys:@"weight,gte"];
-       [sem buildQuery:@"5000000" andKeys:@"weight,lt"];
-       [sem buildQuery:@"frys.com <http://frys.com>"andKeys:@"sitedetails,name" ];
-       [sem buildQuery:@"USD" andKeys:@"sitedetails,latestoffers,currency"];
-       [sem buildQuery:@"100" andKeys:@"sitedetails,latestoffers,price,gte"];
-       [sem buildQuery:@"dsc" andKeys:@"sort,name"];
-       [sem buildQuery:@"10" andKeys:@"offset"];
-       [sem buildQuery:@"5" andKeys:@"limit"];
+       [sem buildQuery:@"iphone" andKeys:@"search"];
+       [sem buildQuery:@"dsc" andKeys:@"sort,price"];
+       [sem buildQuery:@"2" andKeys:@"offset"];
 
  
 
@@ -141,7 +132,7 @@ Use GitHub's standard fork/commit/pull-request cycle.  If you have any questions
 
 ## Copyright
 
-Copyright (c) 2013 Semantics3 Inc.
+Copyright (c) 2015 Semantics3 Inc.
 
 ## License
 
