@@ -92,7 +92,7 @@ Include the delegate - 'Sem3ObjCDelegate' in the header file where you want to f
 The output is received using the delegate method as shown below:
 
     -(void)queryData:(NSString *)content{
-        NSLog(@"query output: %@",content);
+        NSLog(@"Request output: %@",content);
      }
 
 ### Building your requests
@@ -105,17 +105,17 @@ A request can be constructed by three ways:
 3. Constructing a request using the -(void)buildQuery:(id)object andKeys:(NSString *)keys; method.
     
     
-### Sample Queries
+### Sample Requests
 
-You can intuitively construct all your complex queries but just repeatedly using the following method:
+You can intuitively construct all your complex requests using the following method:
                      
           -(void)buildQuery:(id)object andKeys:(NSString *)keys;
           
-Here is a slightly more complex query:
+Here is a sample complex request:
 
      q={"search":"iphone","sort":{"price":"dsc"},"offset":2}
 
-The above complex query can be constructed using the query builder method as below:
+The above request be constructed using the query builder method as below:
       
       semantics3_objc *sem = [[semantics3_objc alloc] initSemantic3Request:OAUTH_KEY withapiSecret:OAUTH_SECRET andEndpoints:@"products"];
  
